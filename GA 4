@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+#include <unordered_set>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ifstream input("input.txt");
+    ofstream output("output.txt");
+    
+    unordered_set<int> numbers;
+    int num;
+    
+    // Читаем числа до нуля
+    while (input >> num && num != 0) {
+        if (num > 0) {
+            numbers.insert(num);  // Добавляем положительное число
+        } else {
+            numbers.erase(-num);  // Удаляем противоположное (делаем положительным и удаляем)
+        }
+    }
+    
+    // Копируем элементы в вектор для сортировки
+    vector<int> sortedNumbers(numbers.begin(), numbers.end());
+    sort(sortedNumbers.begin(), sortedNumbers.end());
+    
+    // Выводим отсортированные числа
+    for (int n : sortedNumbers) {
+        output << n << " ";
+    }
+    
+    input.close();
+    output.close();
+    return 0;
+}
