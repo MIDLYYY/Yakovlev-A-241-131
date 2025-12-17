@@ -1,35 +1,63 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+
 using namespace std;
 
-int main() {
-    const int n = 10;
-    int arr[n];
 
-    srand(time(nullptr));
-
-    for(int i = 0; i < n; i++) {
-        arr[i] = rand() % (103 - 2 + 1) + 2;
+void fillArray(int arr[], int size, int min, int max) {
+    for (int i = 0; i < size; i++) {
+        arr[i] = rand() % (max - min + 1) + min;
     }
+}
 
-    for(int i = 0; i < n - 1; i++) {
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+
+void selectionSort(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+       
         int minIndex = i;
-        for(int j = i + 1; j < n; j++) {
-            if(arr[j] < arr[minIndex]) {
+        for (int j = i + 1; j < size; j++) {
+            if (arr[j] < arr[minIndex]) {
                 minIndex = j;
             }
         }
-        int temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
+        
+       
+        if (minIndex != i) {
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
     }
-
-    cout << "Сортировка по возрастанию: ";
-    for(int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
-    }
-
-    return 0;
 }
 
+int main() {
+    
+    srand(time(0));
+    
+    const int SIZE = 15; // 
+    int arr[SIZE]; // 
+    
+    const int MIN_VALUE = 2; // 
+    const int MAX_VALUE = 103; // 
+    
+    fillArray(arr, SIZE, MIN_VALUE, MAX_VALUE);
+    
+    cout << "Исходный массив:" << endl;
+    printArray(arr, SIZE);
+    
+
+    selectionSort(arr, SIZE);
+    
+    cout << "Отсортированный массив (по возрастанию):" << endl;
+    printArray(arr, SIZE);
+    
+    return 0;
+}
