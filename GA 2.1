@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+void printNumbers(int n) {
+    if (n > 0) {
+        printNumbers(n - 1);  // Рекурсивный вызов для меньшего числа
+        cout << n << " ";     // Выводим текущее число при возврате из рекурсии
+    }
+}
+
+int main() {
+    int n;
+    cout << "Введите n: ";
+    cin >> n;
+    
+    cout << "Числа от 1 до " << n << ": ";
+    printNumbers(n);
+    
+    return 0;
+}
