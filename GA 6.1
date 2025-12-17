@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+using namespace std;
+
+int main() {
+    int N, S, F;
+    cin >> N >> S >> F;
+    
+    // Преобразуем к 0-based индексации
+    S--; F--;
+    
+    vector<vector<int>> graph(N, vector<int>(N));
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cin >> graph[i][j];
+        }
+    }
+    
+    // Массив минимальных расстояний
+    vector<int> dist(N, INT_MAX);
+    dist[S] = 0;
+    
+    // Массив посещенных вершин
+    vector<bool> visited(N, false);
+    
+    // Алгоритм Дейкстры
+    for (int i = 0; i < N; i++) {
+        // Находим непосещенную вершину с минимальным расстоянием
+        int u = -1;
+        for (int j = 0; j < N; j++) {
+            if (!visited[j] && (u == -1 || dist[j] < dist[u])) {
+                u = j;
+            }
+        }
+        
+        // Если такой вершины нет или расстояние до нее бесконечно
+        if (u == -1 || dist[u] == INT_MAX) {
+            break;
+        }
+        
+        visited[u] = true;
+        
+        // Обновляем расстояния до соседей
+        for (int v = 0; v < N; v++) {
+            if (graph[u][v] != -1 && !visited[v]) {
+                if (dist[u] + graph[u][v] < dist[v]) {
+                    dist[v] = dist[u] + graph[u][v];
+                }
+            }
+        }
+    }
+    
+    // Выводим результат
+    if (dist[F] == INT_MAX) {
+        cout << -1 << endl;
+    } else {
+        cout << dist[F] << endl;
+    }
+    
+    return 0;
+}
