@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// Вспомогательная функция для проверки простоты числа
+bool isPrime(int n, int divisor = 2) {
+    if (n <= 2) {
+        return (n == 2);  // 2 - простое, 1 и меньше - нет
+    }
+    if (divisor * divisor > n) {
+        return true;  // Проверили все делители до √n
+    }
+    if (n % divisor == 0) {
+        return false;  // Нашли делитель
+    }
+    return isPrime(n, divisor + 1);  // Проверяем следующий делитель
+}
+
+// Основная функция для вывода простых делителей
+void printPrimeDivisors(int n, int divisor = 2) {
+    if (n <= 1) {
+        return;  // Базовый случай
+    }
+    
+    if (divisor * divisor > n) {
+        // Если дошли сюда и n > 1, то n - простое
+        if (n > 1) {
+            cout << n << " ";
+        }
+        return;
+    }
+    
+    // Если divisor - простой делитель n
+    if (n % divisor == 0 && isPrime(divisor)) {
+        cout << divisor << " ";
+        // Делим n на divisor пока делится
+        while (n % divisor == 0) {
+            n /= divisor;
+        }
+    }
+    
+    // Рекурсивно проверяем следующий делитель
+    printPrimeDivisors(n, divisor + 1);
+}
+
+int main() {
+    int n;
+    cout << "Введите n (>1): ";
+    cin >> n;
+    
+    if (n <= 1) {
+        cout << "Число должно быть больше 1!" << endl;
+        return 0;
+    }
+    
+    cout << "Простые делители числа " << n << ": ";
+    printPrimeDivisors(n);
+    
+    return 0;
+}
