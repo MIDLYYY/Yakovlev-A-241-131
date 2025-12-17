@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <climits>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    
+    vector<int> cost(N);
+    for (int i = 0; i < N; i++) {
+        cin >> cost[i];
+    }
+    
+    int M;
+    cin >> M;
+    
+    // Создаем список смежности
+    vector<vector<int>> graph(N);
+    for (int i = 0; i < M; i++) {
+        int a, b;
+        cin >> a >> b;
+        a--; b--; // Преобразуем к 0-based
+        graph[a].push_back(b);
+        graph[b].push_back(a); // Дороги двусторонние
+    }
+    
+    // Массив минимальных стоимостей
+    vector<int> minCost(N, INT_MAX);
+    minCost[0] = cost[0]; // Стоимость в начальном городе
+    
+    // Массив посещенных городов
+    vector<bool> visited(N, false);
+    
+    // Алгоритм Дейкстры
+    for (int i = 0; i < N; i++) {
+        // Находим непосещенный город с минимальной стоимостью
+        int u = -1;
+        for (int j = 0; j < N; j++) {
+            if (!visited[j] && (u == -1 || minCost[j] < minCost[u])) {
+                u = j;
+            }
+        }
+        
+        // Если такого города нет или стоимость бесконечна
+        if (u == -1 || minCost[u] == INT_MAX) {
+            break;
+        }
+        
+        // Если достигли конечного города
+        if (u == N - 1) {
+            cout << minCost[u] << endl;
+            return 0;
+        }
+        
+        visited[u] = true;
+        
+        // Обновляем стоимости для соседей
+        for (int v : graph[u]) {
+            if (!visited[v]) {
+                // В каждом городе нужно покупать бензин
+                int newCost = minCost[u] + cost[v];
+                if (newCost < minCost[v]) {
+                    minCost[v] = newCost;
+                }
+            }
+        }
+    }
+    
+    // Если не достигли конечного города
+    cout << -1 << endl;
+    
+    return 0;
+}
