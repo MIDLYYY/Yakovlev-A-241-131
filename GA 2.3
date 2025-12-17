@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int sumOfDigits(int n) {
+    if (n == 0) {
+        return 0;  // Базовый случай: сумма цифр 0 равна 0
+    }
+    // Последняя цифра + сумма цифр оставшейся части числа
+    return (n % 10) + sumOfDigits(n / 10);
+}
+
+int main() {
+    int n;
+    cout << "Введите число N: ";
+    cin >> n;
+    
+    cout << "Сумма цифр числа " << n << " = " << sumOfDigits(abs(n)) << endl;
+    
+    return 0;
+}
