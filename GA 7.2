@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    
+    vector<pair<long long, long long>> boxes(n);
+    for (int i = 0; i < n; i++) {
+        cin >> boxes[i].first >> boxes[i].second;
+    }
+    
+    // Сортируем по несущей способности (ci), а при равных - по весу (wi)
+    sort(boxes.begin(), boxes.end(), [](const pair<long long, long long>& a, const pair<long long, long long>& b) {
+        if (a.second == b.second) {
+            return a.first < b.first;
+        }
+        return a.second < b.second;
+    });
+    
+    // Максимальная куча (priority_queue по умолчанию дает максимальный элемент)
+    priority_queue<long long> pq;
+    long long total_weight = 0;
+    
+    for (int i = 0; i < n; i++) {
+        long long weight = boxes[i].first;
+        long long capacity = boxes[i].second;
+        
+        // Пытаемся добавить текущую коробку
+        total_weight += weight;
+        pq.push(weight);
+        
+        // Если общий вес превышает несущую способность текущей (самой слабой) коробки
+        if (total_weight > capacity) {
+            // Удаляем самую тяжелую коробку из башни
+            total_weight -= pq.top();
+            pq.pop();
+        }
+    }
+    
+    // Количество коробок в башне = размер очереди
+    cout << pq.size() << endl;
+    
+    return 0;
+}
