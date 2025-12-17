@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cstdlib>  // для qsort
+#include <cstring>  // для strcmp
+using namespace std;
+
+// Структура для хранения данных о студенте
+struct Student {
+    char surname[50];  // Фамилия студента
+    char name[50];     // Имя студента
+    int group;         // Номер группы
+};
+
+// Функция сравнения для qsort - сравнивает фамилии студентов
+int compareStudents(const void* a, const void* b) {
+    const Student* studentA = (const Student*)a;
+    const Student* studentB = (const Student*)b;
+    return strcmp(studentA->surname, studentB->surname);
+}
+
+// Функция для вывода списка студентов
+void printStudents(Student students[], int count) {
+    for (int i = 0; i < count; i++) {
+        cout << students[i].surname << " "
+            << students[i].name << " (группа "
+            << students[i].group << ")" << endl;
+    }
+}
+
+int main() {
+    // Создаем массив студентов
+    const int COUNT = 5;
+    Student students[COUNT] = {
+        {"Иванов", "Иван", 101},
+        {"Петров", "Петр", 102},
+        {"Сидоров", "Алексей", 101},
+        {"Андреев", "Дмитрий", 103},
+        {"Борисов", "Сергей", 102}
+    };
+
+    // Выводим исходный список
+    cout << "Исходный список студентов:" << endl;
+    printStudents(students, COUNT);
+
+    // Сортируем студентов по фамилии (по алфавиту)
+    qsort(students, COUNT, sizeof(Student), compareStudents);
+
+    // Выводим отсортированный список
+    cout << "\nОтсортированный список студентов (по алфавиту):" << endl;
+    printStudents(students, COUNT);
+
+    return 0;
+}
