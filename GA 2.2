@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+void printFromAToB(int a, int b) {
+    cout << a << " ";  // Выводим текущее число
+    
+    if (a < b) {
+        printFromAToB(a + 1, b);  // Рекурсия вперед
+    } else if (a > b) {
+        printFromAToB(a - 1, b);  // Рекурсия назад
+    }
+    // Если a == b, рекурсия завершается
+}
+
+int main() {
+    int a, b;
+    cout << "Введите A: ";
+    cin >> a;
+    cout << "Введите B: ";
+    cin >> b;
+    
+    cout << "Числа от " << a << " до " << b << ": ";
+    printFromAToB(a, b);
+    
+    return 0;
+}
