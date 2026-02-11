@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Класс транспортного средства
+class Vehicle {
+private:
+    string brand;   // марка
+    int maxSpeed;   // максимальная скорость
+    int currentSpeed; // текущая скорость
+
+public:
+    // Конструктор: задаем марку и макс. скорость, текущая = 0
+    Vehicle(string b, int max) {
+        brand = b;
+        maxSpeed = max;
+        currentSpeed = 0;
+    }
+
+    // Увеличение скорости (не больше maxSpeed)
+    void accelerate(int increment) {
+        if (currentSpeed + increment > maxSpeed)
+            currentSpeed = maxSpeed;
+        else
+            currentSpeed += increment;
+    }
+
+    // Уменьшение скорости (не меньше 0)
+    void brake(int decrement) {
+        if (currentSpeed - decrement < 0)
+            currentSpeed = 0;
+        else
+            currentSpeed -= decrement;
+    }
+
+    // Вывод информации
+    void getStatus() {
+        cout << "Марка: " << brand << endl;
+        cout << "Макс. скорость: " << maxSpeed << " км/ч" << endl;
+        cout << "Текущая скорость: " << currentSpeed << " км/ч" << endl;
+    }
+};
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    // Создаем машину
+    Vehicle car("Toyota", 200);
+
+    // Проверяем методы
+    car.getStatus();
+
+    car.accelerate(50);
+    cout << "\nПосле разгона на 50:\n";
+    car.getStatus();
+
+    car.accelerate(300);
+    cout << "\nПытаемся разогнаться еще на 300:\n";
+    car.getStatus();
+
+    car.brake(30);
+    cout << "\nТормозим на 30:\n";
+    car.getStatus();
+
+    car.brake(500);
+    cout << "\nТормозим на 500:\n";
+    car.getStatus();
+
+    return 0;
+}
