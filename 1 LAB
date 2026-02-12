@@ -44,7 +44,7 @@ public:
 int main() {
     setlocale(LC_ALL, "ru");
     // Создаем машину
-    Vehicle car("Toyota", 200);
+    Vehicle car("Lada", 200);
 
     // Проверяем методы
     car.getStatus();
