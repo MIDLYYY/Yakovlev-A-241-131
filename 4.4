@@ -1,4 +1,5 @@
 #include <iostream>
+#include <clocale>
 #include "Weapon.h"
 #include "Characteristic.h"
 #include "MyMath.h"
@@ -9,37 +10,45 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
+    //  Работа с Weapon (теперь с геттерами/сеттерами) 
+    cout << "\n=== Тестирование класса Weapon  ===" << endl;
     Weapon sword("Меч", 25, 2);
     sword.printInfo();
 
-    Weapon axe("Топор", 15, 7);
-    axe.printInfo();
+    // Используем get-методы
+    cout << "\nНазвание (через геттер): " << sword.getName() << endl;
+    cout << "Урон (через геттер): " << sword.getDamage() << endl;
+    cout << "Вес (через геттер): " << sword.getWeight() << endl;
 
-    cout << "Вес " << sword.getName() << " + " << axe.getName() << " = " << sword.newWeapon(axe) << endl;
+    // Используем set-метод для урона
+    sword.setDamage(30);
+    cout << "Урон после изменения: " << sword.getDamage() << endl;
 
-    Weapon* bow = new Weapon("Лук", 10, 0.1);
-    bow->printInfo();
-    delete bow;
-    cout << endl;
+    // Попытка установить отрицательный урон
+    sword.setDamage(-5);  // должно вывести предупреждение
 
-    if (sword.checkWeight(3)) {
-        cout << "Вес оружия: " << sword.getName() << " < 3" << endl;
-    }
-    else {
-        cout << "Вес оружия: " << sword.getName() << " >= 3" << endl;
-    }
+    // Класс Characteristic и дружественность
+    cout << "\n=== Тестирование класса Characteristic ===" << endl;
+    Characteristic hero(15);  // сила героя = 15
+    float totalDamage = hero.GetDamage(sword);
+    cout << "Сила героя: 15, урон меча: " << sword.getDamage()
+         << ", суммарный урон: " << totalDamage << endl;
 
-    cout << "Перегрузка функцией принимающей просто вес = " << sword.newWeapon(10) << endl;
+    //  Класс MyMath со статическими методами и счётчиком
+    cout << "\n=== Тестирование класса MyMath ===" << endl;
+    int a = 10, b = 3;
+    cout << "Add: " << MyMath::Add(a, b) << endl;
+    cout << "Sub: " << MyMath::Sub(a, b) << endl;
+    cout << "Mult: " << MyMath::Mult(a, b) << endl;
+    cout << "Div: " << MyMath::Div(a, b) << endl;
 
-    cout << endl << "Проверка set запроса до:\nУрон меча = " << sword.getDamage() << endl;
-    sword.setDamage(999);
-    cout << "После:\nУрон меча = " << sword.getDamage() << endl;
-    Characteristic hero(10);
-    cout << "Урон наносимый героем с помощью топора = " << hero.GetDamage(axe) << endl;
-    MyMath opers;
-    cout << "Сложение с помощью MyMath: 2, 3 = " << opers.Add(2, 3) << endl;
-    cout << "Вычитание с помощью MyMath: 2, 3 = " << opers.Sub(2, 3) << endl;
-    cout << "Умножение с помощью MyMath: 2, 3 = " << opers.Mult(2, 3) << endl;
-    cout << "Деление с помощью MyMath: 2, 3 = " << opers.Div(2, 3) << endl;
-    cout << "Значение статической переменной после операций = " << opers.getStaticCount() << endl;
+    // Проверяем количество вызовов
+    cout << "Количество вызовов методов MyMath: " << MyMath::GetCallCount() << endl;
+
+    // Ещё несколько вызовов
+    MyMath::Add(5, 5);
+    MyMath::Sub(10, 1);
+    cout << "После ещё двух вызовов: " << MyMath::GetCallCount() << endl;
+
+    return 0;
 }
