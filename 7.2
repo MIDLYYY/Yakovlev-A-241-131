@@ -8,7 +8,7 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
-    // --- Часть 1: проверка имени ---
+    // проверка имени 
     cout << "Введите своё имя (от 2 до 32 букв, первая заглавная): ";
     string name;
     getline(cin, name);
@@ -29,7 +29,7 @@ int main()
         cout << "Имя не соответствует требованиям." << endl;
     }
 
-    // --- Часть 2: извлечение email-адресов ---
+    //  извлечение email-адресов 
     // Строка с несколькими email-адресами
     string text = "Мои контакты: john.doe@example.com и support@site.org. "
                   "Также можно написать на admin@mail.ru или info@company.co.uk.";
