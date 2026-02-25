@@ -31,10 +31,10 @@ public:
     ~Weapon();
 
     // Геттеры
-    string getName() const;
-    float getDamage() const;
-    float getWeight() const;
-    WeaponType getType() const;  // новый геттер
+    string getName();
+    float getDamage();
+    float getWeight() ;
+    WeaponType getType();  // новый геттер
 
     // Сеттер для урона
     void setDamage(float newDamage);
