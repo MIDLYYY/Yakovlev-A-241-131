@@ -9,45 +9,45 @@ private:
     TRight rightHand;
 
 public:
-    // Конструктор
-    ArmsHolder(const TLeft& left, const TRight& right);
+    // Конструктор (теперь параметры передаются по значению, а не по константной ссылке)
+    ArmsHolder(TLeft left, TRight right);
 
-    // Геттеры
-    TLeft getLeft() const;
-    TRight getRight() const;
+    // Геттеры (возвращают копии, не помечены const)
+    TLeft getLeft();
+    TRight getRight();
 
-    // Сеттеры
-    void setLeft(const TLeft& left);
-    void setRight(const TRight& right);
+    // Сеттеры (принимают по значению)
+    void setLeft(TLeft left);
+    void setRight(TRight right);
 };
 
-// Реализация шаблонных методов 
+// Реализация шаблонных методов
 template <typename TLeft, typename TRight>
-ArmsHolder<TLeft, TRight>::ArmsHolder(const TLeft& left, const TRight& right)
+ArmsHolder<TLeft, TRight>::ArmsHolder(TLeft left, TRight right)
     : leftHand(left), rightHand(right)
 {
 }
 
 template <typename TLeft, typename TRight>
-TLeft ArmsHolder<TLeft, TRight>::getLeft() const
+TLeft ArmsHolder<TLeft, TRight>::getLeft()
 {
     return leftHand;
 }
 
 template <typename TLeft, typename TRight>
-TRight ArmsHolder<TLeft, TRight>::getRight() const
+TRight ArmsHolder<TLeft, TRight>::getRight()
 {
     return rightHand;
 }
 
 template <typename TLeft, typename TRight>
-void ArmsHolder<TLeft, TRight>::setLeft(const TLeft& left)
+void ArmsHolder<TLeft, TRight>::setLeft(TLeft left)
 {
     leftHand = left;
 }
 
 template <typename TLeft, typename TRight>
-void ArmsHolder<TLeft, TRight>::setRight(const TRight& right)
+void ArmsHolder<TLeft, TRight>::setRight(TRight right)
 {
     rightHand = right;
 }
