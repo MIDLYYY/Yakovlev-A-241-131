@@ -1,14 +1,12 @@
-#include <iostream>
-#include "func.h"
+#ifndef FUNC_H
+#define FUNC_H
 
-using namespace std;
-
+// Макрос для вычисления суммы двух чисел
 #define SUM(a, b) ((a) + (b))
 
 namespace MySpace {
-    void func(int num) {
-        static int stat = 0;
-        cout << endl << "Ñóììà àðãóìåíòà è ñòàòè÷åñêîé ïåðåìåííîé = " << SUM(stat, num);
-        stat = num;
-    }
+    // Объявление функции с одним параметром
+    void func(int num);
 }
+
+#endif
