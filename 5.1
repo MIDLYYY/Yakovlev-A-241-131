@@ -1,8 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
+#include <clocale>
 #include "Weapon.h"
-#include "MagicWeapon.h"
+#include "Characteristic.h"
 #include "Player.h"
-#include "WeaponType.h"
+#include "MagicWeapon.h"
 
 using namespace std;
 
@@ -10,38 +11,77 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
-    Weapon sword("Меч", 25, 2, ONEHANDED);
+    // Тестирование класса Weapon 
+    cout << "\n=== Тестирование Weapon с типом ===" << endl;
+    Weapon sword("Меч", 25, 2, WeaponType::ONEHANDED);
+    Weapon bow("Длинный лук", 15, 1.5f, WeaponType::BOW);
+    Weapon staff; // по умолчанию Посох, тип ONEHANDED
+
     sword.printInfo();
+    bow.printInfo();
+    staff.printInfo();
 
-    Weapon axe("Топор", 15, 7, TWOHANDED);
-    axe.printInfo();
-    Weapon* bow = new Weapon("Лук", 10, 0.1, BOW);
-    bow->printInfo();
+    // Вывод текстового представления типа через if 
+    cout << "\nТип меча: ";
+    if (sword.getType() == WeaponType::ONEHANDED)
+        cout << "Одноручное оружие" << endl;
+    else if (sword.getType() == WeaponType::TWOHANDED)
+        cout << "Двуручное оружие" << endl;
+    else if (sword.getType() == WeaponType::BOW)
+        cout << "Лук" << endl;
+    else if (sword.getType() == WeaponType::CROSSBOW)
+        cout << "Арбалет" << endl;
 
+    cout << "Тип лука: ";
+    if (bow.getType() == WeaponType::ONEHANDED)
+        cout << "Одноручное оружие" << endl;
+    else if (bow.getType() == WeaponType::TWOHANDED)
+        cout << "Двуручное оружие" << endl;
+    else if (bow.getType() == WeaponType::BOW)
+        cout << "Лук" << endl;
+    else if (bow.getType() == WeaponType::CROSSBOW)
+        cout << "Арбалет" << endl;
 
-    if (sword.getType() == ONEHANDED) {
-        cout << endl << sword.getName() << " - это одноручное оружие" << endl;
-    }
+    //  Тестирование структуры Player
+    cout << "\n=== Тестирование структуры Player ===" << endl;
     Player player;
     player.id = 1;
-    player.login = "login";
-    player.password = "password";
-    player.printAll();
-    cout << endl;
+    player.login = "Hero123";
+    player.password = "qwerty";
+    player.printInfo();
 
-    MagicWeapon ump = MagicWeapon("Пистолет-пулемет", 14, 2, CROSSBOW, 10);
-    ump.printInfo();
-    cout << "Общий урон: " << ump.getDamage() << endl;
-    cout << "Дополнительный магический урон: " << ump.getExtraDamage() << endl;
-    cout << endl;
+    //  Тестирование класса MagicWeapon 
+    cout << "\n=== Тестирование MagicWeapon ===" << endl;
+    MagicWeapon fireStaff("Огненный посох", 5.0f, 3.0f, WeaponType::TWOHANDED, 12.0f);
+    MagicWeapon defaultMagic;
 
-    MagicWeapon magicSword("Магический меч", 10, 2, ONEHANDED, 10);
-    magicSword.printInfo();
-    cout << "Общий урон: " << magicSword.getDamage() << endl;
+    fireStaff.printInfo();
+    cout << "Дополнительный урон: " << fireStaff.getExtraDamage() << endl;
+    cout << "Общий урон: " << fireStaff.getDamage() + fireStaff.getExtraDamage() << endl;
 
+    defaultMagic.printInfo();
+    cout << "Дополнительный урон: " << defaultMagic.getExtraDamage() << endl;
+    cout << "Общий урон: " << defaultMagic.getDamage() + defaultMagic.getExtraDamage() << endl;
 
-    cout << "Урон Пистолет-пулемета > магического меча: " << (ump > magicSword ? "Да" : "Нет") << endl;
-    cout << "Урон пистолета-пулемета > меча: " << (ump > sword ? "Да" : "Нет") << endl;
-    delete bow;
+    // Проверка унаследованных геттеров
+    cout << "\nИмя (геттер): " << fireStaff.getName() << endl;
+    cout << "Вес (геттер): " << fireStaff.getWeight() << endl;
+    
+    // Вывод типа без отдельной функции
+    cout << "Тип: ";
+    if (fireStaff.getType() == WeaponType::ONEHANDED)
+        cout << "Одноручное оружие" << endl;
+    else if (fireStaff.getType() == WeaponType::TWOHANDED)
+        cout << "Двуручное оружие" << endl;
+    else if (fireStaff.getType() == WeaponType::BOW)
+        cout << "Лук" << endl;
+    else if (fireStaff.getType() == WeaponType::CROSSBOW)
+        cout << "Арбалет" << endl;
 
+    //  Проверка Characteristic с новым оружием 
+    cout << "\n=== Проверка Characteristic ===" << endl;
+    Characteristic hero(15);
+    cout << "Урон героя с оружием: " << hero.GetDamage(fireStaff) << " (сила + урон оружия)" << endl;
+
+    return 0;
 }
