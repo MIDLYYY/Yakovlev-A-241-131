@@ -1,56 +1,48 @@
-#include "Weapon.h"
+#pragma once
 
-// Конструктор с аргументами
-Weapon::Weapon(string inputName, float inputDamage, float inputWeight, WeaponType inputType)
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Перечисление типов оружия
+enum class WeaponType
 {
-    name = inputName;
-    damage = inputDamage;
-    weight = inputWeight;
-    type = inputType;
-}
-// Пустой конструктор с дефолтными значениями
-Weapon::Weapon() : Weapon("Посох", 1.00, 5.25, ONEHANDED) {}
+    ONEHANDED,   
+    TWOHANDED,   
+    BOW,         
+    CROSSBOW    
+};
 
-Weapon::~Weapon() {
-    cout << "Удаление оружия";
-    printInfo();
-}
+class Characteristic;
 
-string Weapon::getName() {
-    return name;
-}
-
-float Weapon::getDamage() {
-    return damage;
-}
-
-float Weapon::getWeight() {
-    return weight;
-}
-WeaponType Weapon::getType() {
-    return type;
-}
-
-void Weapon::setDamage(float newDamage) { damage = newDamage; }
-
-void Weapon::printInfo()
+class Weapon
 {
-    cout << "\nИмя: " << name << endl << "Урон: " << damage << endl << "Вес: " << weight << endl << "Тип оружия: " << type << endl;
-}
+private:
+    string name;
+    float damage;
+    float weight;
+    WeaponType type; 
 
-bool Weapon::checkWeight(float maxWeight) {
-    if (maxWeight > weight) { return true; }
-    else { return false; }
-}
-ostream& operator<<(ostream& os, const Weapon& weapon) {
-    os << weapon.name << endl;
-    return os;
-}
+public:
+    // Конструкторы 
+    Weapon(string inputName, float inputDamage, float inputWeight, WeaponType inputType = WeaponType::ONEHANDED);
+    Weapon(); // без параметров
 
-// Аргумент выступает в виде ссылки на объект класса, потому что иначе срабатывает деконструктор на передаваемый элемент
-int Weapon::newWeapon(Weapon& newItem) {
-    return newWeapon(newItem.weight);
-}
-int Weapon::newWeapon(int newWeight) {
-    return newWeight + weight;
-}
+    ~Weapon();
+
+    // Геттеры
+    string getName() const;
+    float getDamage() const;
+    float getWeight() const;
+    WeaponType getType() const;  // новый геттер
+
+    // Сеттер для урона
+    void setDamage(float newDamage);
+
+    void printInfo();
+    bool canLift(float maxWeight);
+    float totalWeight(Weapon other);
+    float totalWeight(float additionalWeight);
+
+    friend class Characteristic;
+};
