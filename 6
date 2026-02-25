@@ -1,53 +1,100 @@
-#include "ExceptionClass.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-const char* CustomError::what() const throw() {
-    if (code == ErrorCode::Negative) return "Вы ввели отрицательное число";
-    else if (code == ErrorCode::Big) return "Вы ещё не родились";
-    else if (code == ErrorCode::False) return "Что-то не верится";
-}
+// Собственный класс исключения для года рождения
+class YearException
+{
+public:
+    // Перечисление возможных ошибок
+    enum ErrorCode
+    {
+        TOO_OLD,    // год меньше 1850
+        TOO_YOUNG,  // год больше текущего
+        NEGATIVE    // отрицательное число
+    };
+
+    ErrorCode code;  // код ошибки
+
+    // Конструктор
+    YearException(ErrorCode c) : code(c) {}
+};
 
 int main()
 {
-    setlocale(LC_ALL, "RU");
+    setlocale(LC_ALL, "Russian");
+
+    // --- Часть 1: ввод числа 1, 2 или 3 ---
+    cout << "Введите число 1, 2 или 3: ";
     int num;
-    try {
-        cout << "Введите число 1, 2 или 3: ";
-        cin >> num;
-        if (num == 1) { cout << "один" << endl; }
-        else if (num == 2) { cout << "два" << endl; }
-        else if (num == 3) { cout << "три" << endl; }
-        else throw "Некорректное значение";
+    cin >> num;
+
+    try
+    {
+        if (num == 1)
+        {
+            cout << "Один" << endl;
+        }
+        else if (num == 2)
+        {
+            cout << "Два" << endl;
+        }
+        else if (num == 3)
+        {
+            cout << "Три" << endl;
+        }
+        else
+        {
+            throw 1;  // выбрасываем любое исключение
+        }
     }
-    catch (const char* msg) {
-        cout << msg << endl;
+    catch (...)
+    {
+        cout << "Некорректное значение" << endl;
     }
 
-    
+    //  ввод года рождения с использованием собственного исключения 
+    // Для упрощения используем константу текущего года (без <ctime>)
+    const int CURRENT_YEAR = 2025;
+
+    cout << "\nВведите год своего рождения: ";
     int year;
-    try {
-        cout << "Введите свой год рождения: ";
-        cin >> year;
-        if ((year < 1850) && (year > 0)) { throw range_error("Что-то не верится"); }
-        else if (year > 2025) { throw logic_error("Вы ещё не родились"); }
-        else if (year < 0) { throw exception("Вы ввели отрицательное число"); }
-        cout << "Спасибо" << endl;
-    }
-    catch (exception err) { cout << err.what() << endl; }
-    catch (logic_error err) { cout << err.what() << endl; }
-    catch (range_error err) { cout << err.what() << endl; }
+    cin >> year;
 
-    // с использованием своего класса исключений
-    int new_year;
-    try {
-        cout << "Введите свой год рождения: ";
-        cin >> new_year;
-        if ((new_year < 1850) && (new_year > 0)) { throw CustomError(ErrorCode::False); }
-        else if (new_year > 2025) { throw CustomError(ErrorCode::Big); }
-        else if (new_year < 0) { throw CustomError(ErrorCode::Negative); }
-        cout << "Спасибо" << endl;
+    try
+    {
+        if (year < 1850)
+        {
+            throw YearException(YearException::TOO_OLD);
+        }
+        if (year > CURRENT_YEAR)
+        {
+            throw YearException(YearException::TOO_YOUNG);
+        }
+        if (year < 0)
+        {
+            throw YearException(YearException::NEGATIVE);
+        }
+
+        // Если всё хорошо
+        cout << "Спасибо!" << endl;
     }
-    catch (CustomError code) { cout << code.what(); }
+    catch (const YearException& e)
+    {
+        switch (e.code)
+        {
+        case YearException::TOO_OLD:
+            cout << "Что-то не верится..." << endl;
+            break;
+        case YearException::TOO_YOUNG:
+            cout << "Вы ещё не родились" << endl;
+            break;
+        case YearException::NEGATIVE:
+            cout << "Вы ввели отрицательное число!" << endl;
+            break;
+        }
+    }
+
+    return 0;
 }
