@@ -23,9 +23,9 @@ public:
     ~Weapon();
 
     // Get-методы
-    string getName() const;
-    float getDamage() const;
-    float getWeight() const;
+    string getName();
+    float getDamage();
+    float getWeight()t;
 
     // Set-метод для урона
     void setDamage(float newDamage);
