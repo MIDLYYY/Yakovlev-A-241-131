@@ -1,12 +1,8 @@
-#ifndef FUNC_H
-#define FUNC_H
+#pragma once
 
-// Макрос для вычисления суммы двух чисел
 #define SUM(a, b) ((a) + (b))
 
+
 namespace MySpace {
-    // Объявление функции с одним параметром
     void func(int num);
 }
-
-#endif
