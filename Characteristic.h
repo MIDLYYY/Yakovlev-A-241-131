@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Weapon.h"  // Нужен для использования Weapon в методе GetDamage
+#include "Weapon.h"
 
 class Characteristic
 {
@@ -11,6 +11,6 @@ public:
     // Конструктор
     Characteristic(float str);
 
-    // Метод, использующий дружественность к Weapon
-    float GetDamage(const Weapon& w) const;
+    // Метод, принимающий ссылку на оружие (без const)
+    float GetDamage(Weapon& w);
 };
