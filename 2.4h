@@ -1,9 +1,14 @@
 #pragma once
+#include <iostream>
 
+// Макрос для суммы
 #define SUM(a, b) ((a) + (b))
 
-void func(int num) {
-    static int stat = 0;
-    cout << endl << "Сумма аргумента и статической переменной = " << SUM(stat, num);
-    stat = num;
+namespace MySpace {
+    inline void func(int num) {
+        using namespace std;  // директива using для всего пространства std
+        static int stat = 0;  // статическая переменная
+        cout << endl << "Сумма аргумента и статической переменной = " << SUM(stat, num);
+        stat = num;           // обновление
+    }
 }
