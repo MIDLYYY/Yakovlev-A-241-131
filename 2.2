@@ -1,45 +1,61 @@
 #include <iostream>
-#include <iomanip>
-#include <vector>
-
 using namespace std;
 
-int main()
-{
-    setlocale(LC_ALL, "Ru");
-    int num;
-    cout << "Введите целое положительное число: ";
-    cin >> num;
+int main() {
+    int N;
+    // 1. Запрашиваем целое положительное число
     while (true) {
-        if (num > 0) {
+        cout << "Введите целое положительное число: ";
+        cin >> N;
+        if (N > 0) {
             break;
-        }
-        else { 
-            cout << "Введите целое положительное число: ";
-            cin >> num; 
+        } else {
+            cout << "Ошибка: число должно быть положительным. Повторите ввод." << endl;
         }
     }
-    int sum = 0;
-    for (int i = 1; i <= num; i++) {
+
+    // 2. Выводим сумму от 1 до N в виде выражения
+    cout << "Сумма чисел от 1 до " << N << ": ";
+    long long sum = 0;
+    for (int i = 1; i <= N; i++) {
+        cout << i;
+        if (i < N) {
+            cout << " + ";
+        }
         sum += i;
-        cout << " " << i << " ";
-        if (i != num) { cout << "+"; }
     }
     cout << " = " << sum << endl;
-    vector<int> vec = { 0, 1, 2, 3, 4, 5, 6, 7, 8 ,9 };
-    for (int i = 0; i < 10; i++) { cout << vec[i] << " "; }
+
+    // 3. Создаём массив из 10 чисел
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    // 4. Выводим все числа через пробел
+    cout << "Все числа массива: ";
+    for (int i = 0; i < 10; i++) {
+        cout << arr[i];
+        if (i < 9) {
+            cout << " ";
+        }
+    }
     cout << endl;
 
+    // 5. Выводим числа на чётных позициях (индексы 0, 2, 4, 6, 8)
+    cout << "Числа на чётных позициях (0, 2, 4, 6, 8): ";
     for (int i = 0; i < 10; i++) {
         if (i % 2 == 0) {
-            cout << vec[i] << " ";
+            cout << arr[i] << " ";
         }
     }
     cout << endl;
 
+    // 6. Сумма элементов на нечётных позициях (1, 3, 5, 7, 9)
+    int sumOddPos = 0;
     for (int i = 0; i < 10; i++) {
         if (i % 2 != 0) {
-            cout << vec[i] << " ";
+            sumOddPos += arr[i];
         }
     }
+    cout << "Сумма элементов на нечётных позициях: " << sumOddPos << endl;
+
+    return 0;
 }
