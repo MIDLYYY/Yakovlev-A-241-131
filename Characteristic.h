@@ -9,5 +9,5 @@ private:
 
 public:
     Characteristic(float str);
-    float GetDamage(Weapon& w);  // без const
+    float GetDamage(Weapon& w);  
 };
