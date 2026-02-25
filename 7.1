@@ -1,31 +1,39 @@
 #include <iostream>
 #include <string>
-#include <locale>
-#include "Windows.h"
 
 using namespace std;
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    string s1;
-    cout << "Введите строчку: ";
-    cin >> s1;
-    cout << endl << s1 << endl;
-    if (s1.length() >= 4) {
-        cout << s1.substr(1, 3) << endl;
+    setlocale(LC_ALL, "Russian");
+
+    // Просим пользователя ввести строку
+    cout << "Введите строку: ";
+    string input;
+    getline(cin, input);  // считываем всю строку, включая пробелы
+
+    // Выводим подстроку со 2-го по 4-й символ (включительно)
+    // Пользователь считает символы с 1, поэтому 2-й символ = индекс 1, 4-й символ = индекс 3
+    if (input.length() >= 4)
+    {
+        string sub = input.substr(1, 3);  // начиная с индекса 1, 3 символа
+        cout << "Подстрока со 2-го по 4-й символ: " << sub << endl;
     }
-    else {
-        cout << "Строка слишком короткая!" << endl;
+    else
+    {
+        cout << "Строка слишком коротка для выделения подстроки." << endl;
     }
-    int pos = s1.find('а');
-    cout << pos << endl;
-    if (pos == string::npos) {
-        cout << "Символ а не найден!" << endl;
+
+    // 3. Ищем первое вхождение символа 'a'
+    size_t pos = input.find('a');
+    if (pos != string::npos)
+    {
+        cout << "Индекс первого вхождения 'a': " << pos << " (нумерация с 0)" << endl;
     }
-    else {
-        cout << "Символ а находится под индексом: " << pos << endl;
+    else
+    {
+        cout << "Символа a не найдено" << endl;
     }
-    
+
+    return 0;
 }
