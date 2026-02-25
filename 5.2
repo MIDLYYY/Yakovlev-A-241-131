@@ -1,0 +1,55 @@
+#include <iostream>
+#include <clocale>
+#include "Weapon.h"
+#include "MagicWeapon.h"
+#include "DisposableWeapon.h"
+#include "ArmsHolder.h"
+
+
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+
+    cout << "=== Демонстрация абстрактного класса ===" << endl;
+    // Следующая строка вызвала бы ошибку компиляции, так как Weapon абстрактен:
+    // Weapon w("Меч", 10, 2, WeaponType::ONEHANDED); // ОШИБКА!
+
+    // Создаём объекты производных классов
+    MagicWeapon fireStaff("Огненный посох", 5.0f, 3.0f, WeaponType::TWOHANDED, 12.0f);
+    DisposableWeapon dagger;
+
+    cout << "\n=== Магическое оружие ===" << endl;
+    fireStaff.printInfo();
+    fireStaff.Attack();  // первый вызов
+    fireStaff.Attack();  // второй вызов (ничего не меняет, просто сообщение)
+
+    cout << "\n=== Одноразовое оружие ===" << endl;
+    dagger.printInfo();
+    dagger.Attack();  // первый вызов – оружие используется
+    dagger.Attack();  // второй вызов – уже использовано
+
+    cout << "\n=== Шаблонный класс ArmsHolder ===" << endl;
+    // Храним магическое оружие в левой руке и целое число (id) в правой
+    ArmsHolder<MagicWeapon, int> holder(fireStaff, 101);
+    cout << "Левая рука (оружие): " << holder.getLeft().getName() << endl;
+    cout << "Правая рука (id): " << holder.getRight() << endl;
+
+    // Меняем правую руку
+    holder.setRight(202);
+    cout << "Новый id в правой руке: " << holder.getRight() << endl;
+
+    // Храним два целых числа (например, id оружия в обеих руках)
+    ArmsHolder<int, int> idHolder(10, 20);
+    cout << "\nID в левой руке: " << idHolder.getLeft()
+         << ", в правой: " << idHolder.getRight() << endl;
+
+    // Меняем оба значения
+    idHolder.setLeft(30);
+    idHolder.setRight(40);
+    cout << "После изменения: левая = " << idHolder.getLeft()
+         << ", правая = " << idHolder.getRight() << endl;
+
+    return 0;
+}
