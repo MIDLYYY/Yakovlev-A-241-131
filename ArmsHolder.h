@@ -1,6 +1,6 @@
 #pragma once
 
-// Шаблонный класс для хранения двух предметов (например, оружие в левой и правой руке)
+// Шаблонный класс для хранения двух предметов 
 template <typename TLeft, typename TRight>
 class ArmsHolder
 {
@@ -9,14 +9,14 @@ private:
     TRight rightHand;
 
 public:
-    // Конструктор (теперь параметры передаются по значению, а не по константной ссылке)
+    // Конструктор 
     ArmsHolder(TLeft left, TRight right);
 
-    // Геттеры (возвращают копии, не помечены const)
+    // Геттеры 
     TLeft getLeft();
     TRight getRight();
 
-    // Сеттеры (принимают по значению)
+    // Сеттеры 
     void setLeft(TLeft left);
     void setRight(TRight right);
 };
