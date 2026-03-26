@@ -1,0 +1,12 @@
+﻿  Car.cpp
+  Source.cpp
+  Создание кода...
+C:\Users\User\source\repos\4 LAB\4 LAB\TransportUnit.h(14,1): error C2059: синтаксическая ошибка: }
+  (компиляция исходного файла "Car.cpp")
+  
+C:\Users\User\source\repos\4 LAB\4 LAB\TransportUnit.h(14,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
+  (компиляция исходного файла "Car.cpp")
+  
+C:\Users\User\source\repos\4 LAB\4 LAB\Car.h(5,1): error C2059: синтаксическая ошибка: {
+  (компиляция исходного файла "Car.cpp")
+  
